@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="共通">
+      <UniqueIdentifier>b83ac6bc-aef8-4231-bf31-b3626d2eff44</UniqueIdentifier>
+    </Filter>
+    <Filter Include="資産">
+      <UniqueIdentifier>9f5f3b31-ce2c-4e18-8cb0-34ed151f218e</UniqueIdentifier>
+    </Filter>
+    <Page Include="Common\StandardStyles.xaml">
+      <Filter>共通</Filter>
+    </Page>
+    <Image Include="Assets\Logo.png">
+      <Filter>資産</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.png">
+      <Filter>資産</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>資産</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.png">
+      <Filter>資産</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.xaml.cpp" />
+    <ClCompile Include="MainPage.xaml.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="MySquirrelTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="App.xaml.h" />
+    <ClInclude Include="MainPage.xaml.h" />
+    <ClInclude Include="MySquirrelTest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="StoreAppSquirrelTest1_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml" />
+  </ItemGroup>
+</Project>

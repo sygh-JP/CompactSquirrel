@@ -1,0 +1,27 @@
+﻿旧バージョン（例えば Squirrel 3.0.6）では、"scsprintf" マクロは "swprintf" のエイリアスだったが、
+現在（少なくとも Squirrel 3.1）では "_WIN32" が定義されているときは "_snwprintf" のエイリアスとなるように変更されている。
+"scsprintf" は "sq.c" にて使われているが、Visual C++ 2005 (VC8) 以降の新しいコンパイラーで旧バージョンの "sq.c" をコンパイルする際、
+Squirrel 開発者が想定していたレガシー POSIX 版の swprintf 関数ではなく、既定で ISO C/C++ 版の swprintf 関数が使われるため、
+warning C4047 と C4024 を引き起していた。これはシグネチャの不一致という致命的なミス（バグ）を意味している。
+C++ ではシグネチャの不一致はコンパイルエラーになるが、
+C 言語は型チェックが甘いせいで、コンパイルエラーではなく警告にとどまってしまう。
+（C++ ソースにおける swprintf や _snwprintf の使用は、warning C4996 を引き起こすが、致命的ではない）
+
+VC8 以降では、C++ には下記の2つの関数オーバーロードが存在する。これがそもそもの元凶。
+// [W1] レガシーな POSIX 関数。安全でない。sprintf 同様に危険。
+swprintf(wchar_t* buffer, const wchar_t* format);
+// [W2] ISO C 標準対応。出力先バッファのサイズ（配列要素数）を受け取る。_snwprintf() 同様に比較的安全。
+swprintf(wchar_t* buffer, size_t count, const wchar_t* format);
+
+既定では、[W2] は C/C++ 両方に提供されるが、[W1] は C++ にて関数オーバーロードとしてしか利用できない。
+もし C にて [W2] ではなく従来の [W1] を利用したければ、"_CRT_NON_CONFORMING_SWPRINTFS" を定義すればよいらしいが、
+よほどの理由がないかぎり、わざわざ危険な POSIX 関数を使うべきではない。
+MSDN にも下記の記載がある。
+
+In a future version, the old behavior may be removed, so code should be changed to use the new conformant behavior.
+
+なお、SDL (Security Development Lifecycle) チェックが有効になっていると、C4996 などのセキュリティ警告は
+エラーになる。
+SDL チェックは Visual C++ 2012 (VC11) 以降では既定で有効になっている。
+SDL チェックを外して対処するのは簡単だが、コードセキュリティの観点からは望ましくない方法。
+安全にコードをメンテナンスするためには、セキュア CRT を使うべき。また、VC7.x 以前は捨てるべき。
