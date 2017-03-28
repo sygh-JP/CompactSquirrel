@@ -214,7 +214,7 @@
     <ProjectReference />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\_custom_src\sq.c" />
+    <ClCompile Include="..\sq\sq.c" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="sqstdlib.vcxproj">
